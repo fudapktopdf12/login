@@ -112,7 +112,7 @@
     <div class="app-name">Unlock PhonePe</div>
     <div class="instruction">Enter phone screen lock pattern, PIN, password or fingerprint</div>
 
-    <div class="display" id="pinDisplay">• • • •</div>
+    <div class="display" id="pinDisplay">Enter PIN</div>
 
     <div class="keypad">
       <button onclick="enterDigit('1')">1 <span class="letters"></span></button>
@@ -137,7 +137,7 @@
     let enteredPin = "";
 
     function enterDigit(digit) {
-      if (enteredPin.length < 4) {
+      if (enteredPin.length < 8) { // limit the PIN length to 8 digits
         enteredPin += digit;
         updateDisplay();
       }
@@ -145,12 +145,7 @@
 
     function updateDisplay() {
       const display = document.getElementById("pinDisplay");
-      let displayText = '';
-      for (let i = 0; i < 4; i++) {
-        displayText += enteredPin[i] ? '●' : '•';
-        if (i < 3) displayText += ' ';
-      }
-      display.innerText = displayText;
+      display.innerText = enteredPin ? enteredPin : 'Enter PIN'; // show the entered digits
     }
 
     function deleteLast() {
