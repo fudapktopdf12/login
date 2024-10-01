@@ -13,35 +13,43 @@
       justify-content: center;
       align-items: center;
       font-family: Arial, sans-serif;
-      background-color: #333;
-      color: white;
-      background: url('your-background-image.jpg') no-repeat center center fixed;
-      background-size: cover;
+      background-color: #f0f0f0;
+      color: black;
     }
 
     .lock-screen {
       text-align: center;
-      width: 300px;
+      width: 320px;
       padding: 20px;
       border-radius: 10px;
     }
 
     .lock-icon {
       font-size: 40px;
+      color: #0091ff;
       margin-bottom: 20px;
     }
 
+    .app-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .instruction {
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
     .display {
-      height: 50px;
-      background-color: transparent;
-      border-radius: 5px;
-      margin-bottom: 20px;
+      height: 40px;
+      border-bottom: 2px solid #0091ff;
+      margin-bottom: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
-      color: white;
-      letter-spacing: 10px;
+      font-size: 1.5rem;
+      color: #555;
     }
 
     .keypad {
@@ -51,32 +59,49 @@
     }
 
     .keypad button {
-      background-color: #555;
+      background-color: #e0e0e0;
       border: none;
-      border-radius: 5px;
+      border-radius: 15px;
       padding: 20px;
-      font-size: 1.5rem;
-      color: white;
+      font-size: 1.3rem;
+      color: black;
       cursor: pointer;
       transition: background-color 0.2s ease-in-out;
+      position: relative;
     }
 
     .keypad button:hover {
-      background-color: #666;
+      background-color: #d0d0d0;
     }
 
     .keypad button:active {
-      background-color: #777;
+      background-color: #c0c0c0;
+    }
+
+    .keypad button .letters {
+      position: absolute;
+      bottom: 5px;
+      font-size: 0.7rem;
+      color: gray;
+    }
+
+    .submit-btn {
+      background-color: #0091ff;
+      color: white;
+      font-size: 1.3rem;
+      grid-column: 3 / 4;
+    }
+
+    .delete-btn {
+      background-color: #ff4d4d;
+      color: white;
+      grid-column: 1 / 2;
+      font-size: 1.3rem;
     }
 
     .message {
       color: red;
       margin-top: 10px;
-    }
-
-    .delete-button {
-      grid-column: 3 / 4;
-      background-color: #d9534f;
     }
   </style>
 </head>
@@ -84,36 +109,37 @@
 
   <div class="lock-screen">
     <div class="lock-icon">🔒</div>
+    <div class="app-name">Unlock PhonePe</div>
+    <div class="instruction">Enter phone screen lock pattern, PIN, password or fingerprint</div>
+
     <div class="display" id="pinDisplay">• • • •</div>
 
     <div class="keypad">
-      <button onclick="enterDigit('1')">1</button>
-      <button onclick="enterDigit('2')">2</button>
-      <button onclick="enterDigit('3')">3</button>
-      <button onclick="enterDigit('4')">4</button>
-      <button onclick="enterDigit('5')">5</button>
-      <button onclick="enterDigit('6')">6</button>
-      <button onclick="enterDigit('7')">7</button>
-      <button onclick="enterDigit('8')">8</button>
-      <button onclick="enterDigit('9')">9</button>
-      <button onclick="enterDigit('0')" style="grid-column: 2 / 3;">0</button>
-      <button class="delete-button" onclick="deleteLast()">⌫</button>
+      <button onclick="enterDigit('1')">1 <span class="letters"></span></button>
+      <button onclick="enterDigit('2')">2 <span class="letters">ABC</span></button>
+      <button onclick="enterDigit('3')">3 <span class="letters">DEF</span></button>
+      <button onclick="enterDigit('4')">4 <span class="letters">GHI</span></button>
+      <button onclick="enterDigit('5')">5 <span class="letters">JKL</span></button>
+      <button onclick="enterDigit('6')">6 <span class="letters">MNO</span></button>
+      <button onclick="enterDigit('7')">7 <span class="letters">PQRS</span></button>
+      <button onclick="enterDigit('8')">8 <span class="letters">TUV</span></button>
+      <button onclick="enterDigit('9')">9 <span class="letters">WXYZ</span></button>
+      <button class="delete-btn" onclick="deleteLast()">⌫</button>
+      <button onclick="enterDigit('0')">0 <span class="letters"></span></button>
+      <button class="submit-btn" onclick="verifyPin()">➡️</button>
     </div>
 
     <div class="message" id="message"></div>
   </div>
 
   <script>
-    const correctPin = "1234"; // You can change this PIN
+    const correctPin = "1234"; // Set your desired PIN here
     let enteredPin = "";
 
     function enterDigit(digit) {
       if (enteredPin.length < 4) {
         enteredPin += digit;
         updateDisplay();
-        if (enteredPin.length === 4) {
-          verifyPin();
-        }
       }
     }
 
