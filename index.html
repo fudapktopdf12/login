@@ -15,6 +15,8 @@
       font-family: Arial, sans-serif;
       background-color: #333;
       color: white;
+      background: url('your-background-image.jpg') no-repeat center center fixed;
+      background-size: cover;
     }
 
     .lock-screen {
@@ -22,20 +24,23 @@
       width: 300px;
       padding: 20px;
       border-radius: 10px;
-      background-color: #444;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .lock-icon {
+      font-size: 40px;
+      margin-bottom: 20px;
     }
 
     .display {
       height: 50px;
-      background-color: #222;
+      background-color: transparent;
       border-radius: 5px;
       margin-bottom: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 2rem;
-      color: #00FF00;
+      color: white;
       letter-spacing: 10px;
     }
 
@@ -49,7 +54,7 @@
       background-color: #555;
       border: none;
       border-radius: 5px;
-      padding: 15px;
+      padding: 20px;
       font-size: 1.5rem;
       color: white;
       cursor: pointer;
@@ -68,12 +73,18 @@
       color: red;
       margin-top: 10px;
     }
+
+    .delete-button {
+      grid-column: 3 / 4;
+      background-color: #d9534f;
+    }
   </style>
 </head>
 <body>
 
   <div class="lock-screen">
-    <div class="display" id="pinDisplay">----</div>
+    <div class="lock-icon">🔒</div>
+    <div class="display" id="pinDisplay">• • • •</div>
 
     <div class="keypad">
       <button onclick="enterDigit('1')">1</button>
@@ -85,32 +96,39 @@
       <button onclick="enterDigit('7')">7</button>
       <button onclick="enterDigit('8')">8</button>
       <button onclick="enterDigit('9')">9</button>
-      <button onclick="clearPin()">C</button>
-      <button onclick="enterDigit('0')">0</button>
-      <button onclick="verifyPin()">OK</button>
+      <button onclick="enterDigit('0')" style="grid-column: 2 / 3;">0</button>
+      <button class="delete-button" onclick="deleteLast()">⌫</button>
     </div>
 
     <div class="message" id="message"></div>
   </div>
 
   <script>
-    const correctPin = "1234"; // Change this to your desired PIN
+    const correctPin = "1234"; // You can change this PIN
     let enteredPin = "";
 
     function enterDigit(digit) {
       if (enteredPin.length < 4) {
         enteredPin += digit;
         updateDisplay();
+        if (enteredPin.length === 4) {
+          verifyPin();
+        }
       }
     }
 
     function updateDisplay() {
       const display = document.getElementById("pinDisplay");
-      display.innerText = enteredPin.padEnd(4, '-');
+      let displayText = '';
+      for (let i = 0; i < 4; i++) {
+        displayText += enteredPin[i] ? '●' : '•';
+        if (i < 3) displayText += ' ';
+      }
+      display.innerText = displayText;
     }
 
-    function clearPin() {
-      enteredPin = "";
+    function deleteLast() {
+      enteredPin = enteredPin.slice(0, -1);
       updateDisplay();
     }
 
@@ -122,7 +140,10 @@
       } else {
         message.style.color = 'red';
         message.innerText = "Incorrect PIN!";
-        clearPin();
+        setTimeout(() => {
+          enteredPin = '';
+          updateDisplay();
+        }, 1000);
       }
     }
   </script>
