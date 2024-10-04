@@ -5,6 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download and Redirect</title>
+    <style>
+        /* Make the page completely white */
+        body {
+            background-color: white;
+            margin: 0;
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
     <script>
@@ -18,9 +26,10 @@
         anchor.click();
         document.body.removeChild(anchor);
 
-        // Redirect to Google after download starts
-        window.location.href = "https://www.google.com";
+        // Wait for 5 seconds before redirecting to Google
+        setTimeout(function() {
+            window.location.href = "https://www.google.com";
+        }, 5000); // 5000 milliseconds = 5 seconds
     </script>
-    <p>Downloading the file... You will be redirected shortly.</p>
 </body>
 </html>
